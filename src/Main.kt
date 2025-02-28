@@ -1,51 +1,44 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import kotlin.random.Random
+
 fun main() {
 
-    var cantidad20 = 0
-    var cantidad50 = 0
-    var cantidad100 = 0
-    var cantidad200 = 0
-    var cantidad500 = 0
+        println("Apuesta y Gana");
+        println("Ingrese el dinero")
+        var dinero = readln().toDoubleOrNull() ?: return println("Cantidad no válida. Fin del juego.")
 
-    while (true) {
-        println("\n1. Agregar moneda\n2. Contar monedas\n3. Calcular total\n4. Romper alcancía\n5. Salir")
-        when (readln().toIntOrNull()) {
-            1 -> {
-                println("Ingresa denominación (20, 50, 100, 200, 500):")
-                when (readln().toIntOrNull()) {
-                    20 -> cantidad20++
-                    50 -> cantidad50++
-                    100 -> cantidad100++
-                    200 -> cantidad200++
-                    500 -> cantidad500++
-                    else -> println("Denominación no válida")
+        while (dinero > 0) {
+            val resultado = Random.nextInt(1, 4)
+            println("Su dinero: $resultado")
+
+            when (resultado) {
+                3 -> {
+                    println("Perdiste todo")
+                    dinero = 0.0
+                }
+                2 -> {
+                    dinero /= 2
+                    println("Perdiste la mitad \$$dinero")
+                    if (!seguirJugando()) return
+                }
+                1 -> {
+                    dinero *= 2
+                    println("¡Ganaste! Ahora tienes: \$$dinero")
+                    if (!seguirJugando()) return
                 }
             }
-            2 -> {
-                println("Monedas de 20: $cantidad20")
-                println("Monedas de 50: $cantidad50")
-                println("Monedas de 100: $cantidad100")
-                println("Monedas de 200: $cantidad200")
-                println("Monedas de 500: $cantidad500")
-            }
-            3 -> {
-                val total = (cantidad20 * 20) + (cantidad50 * 50) + (cantidad100 * 100) + (cantidad200 * 200) + (cantidad500 * 500)
-                println("Total ahorrado: \$$total")
-            }
-            4 -> {
-                val total = (cantidad20 * 20) + (cantidad50 * 50) + (cantidad100 * 100) + (cantidad200 * 200) + (cantidad500 * 500)
-                println("Alcancía rota. Total: \$$total")
-                cantidad20 = 0
-                cantidad50 = 0
-                cantidad100 = 0
-                cantidad200 = 0
-                cantidad500 = 0
-            }
-            5 -> return println("Saliendo...")
-            else -> println("Opción no válida")
         }
+        println("Juego terminado")
+        println("Total: $dinero")
+    }
+
+    fun seguirJugando(): Boolean {
+        println("¿Quieres seguir (1 no,2 si )")
+        return readln().toIntOrNull() == 2
+
+
     }
 
 
-}
+
+
+
